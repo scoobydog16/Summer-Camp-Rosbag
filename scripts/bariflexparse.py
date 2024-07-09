@@ -59,6 +59,7 @@ def color_image_callback(data):
 def depth_image_callback(data):
     global depthDeque, depthCycleOffset
     try:
+        #self.bariflex_current_state()
         bridge = CvBridge()
         # Convert the ROS Image message to OpenCV2
         cv_image = bridge.imgmsg_to_cv2(data, "16UC1")
@@ -69,7 +70,18 @@ def depth_image_callback(data):
         # cv2.imshow("Depth Image", cv_image)
         # cv2.waitKey(1)
     except CvBridgeError as e:
+        
         rospy.logerr("CvBridge Error: {0}".format(e))
+        
+def callback_fn(msg):
+        current = float(re.match(r".Iq.*\d+\.\d+)"), msg.data).group(1)
+        print(current)
+        bariflex.current_state = current:
+
+def get_current_state(self):
+    return self.bariflex_state
+                        
+    
 
 def main():
     global colorDeque, colorCyclesOffset, depthDeque, depthCycleOffset
